@@ -1,0 +1,40 @@
+{
+  "configuracion": {
+    "simbolo": "AAPL",
+    "capital_inicial": 100,
+    "fecha_inicio": "2024-01-01",
+    "fecha_fin": "2024-01-07"
+  },
+  "ejes": {
+    "fechas": [
+      "2024-01-01", 
+      "2024-01-02", 
+      "2024-01-03", 
+      "2024-01-04", 
+      "2024-01-05", 
+      "2024-01-06", 
+      "2024-01-07"
+    ],
+    "empresa_sin_tocar": [200, 300, 400, 300, 200, 2000, 50],
+    "tu_estrategia": [10, 15, 20, 20, 20, 200, 200]
+  },
+  "operaciones": [
+    {
+      "fecha": "2024-01-04",
+      "tipo": "venta",
+      "precio_ejecucion": 400,
+      "motivo": "Stop-Loss preventivo"
+    },
+    {
+      "fecha": "2024-01-06",
+      "tipo": "compra",
+      "precio_ejecucion": 200,
+      "motivo": "Ruptura de máximo"
+    }
+  ],
+  "metricas_finales": {
+    "retorno_total": "1900%",
+    "beneficio_neto": 190,
+    "max_drawdown": "0%"
+  }
+}
