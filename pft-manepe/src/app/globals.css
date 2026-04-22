@@ -3,6 +3,20 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --primary: #C016DD;
+  --primary-light: #E391F2;
+  --primary-dark: #860F9A;
+
+
+  --secondary: #3C12B1;
+  --secondary-light: #7C59E3;
+  --secondary-dark: #280C76;
+
+  --primary-hover-light: #D447EC;
+  --primary-hover-dark: #A112B9;
+  --secondary-hover-light: #4E18E5;
+  --secondary-hover-dark: #310F91;
 }
 
 @theme inline {
@@ -10,11 +24,24 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light-hex);
+  --color-primary-dark: var(--primary-dark-hex);
+
+  --color-secondary: var(--secondary-hex);
+  --color-secondary-light: var(--secondary-light-hex);
+  --color-secondary-dark: var(--secondary-dark-hex);
+
+  --color-primary-hover-light: var(--primary-hover-light-hex);
+  --color-primary-hover-dark: var(--primary-hover-dark-hex);
+  --color-secondary-hover-light: var(--secondary-hover-light-hex);
+  --color-secondary-hover-dark: var(--secondary-hover-dark-hex);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #444444;
     --foreground: #ededed;
   }
 }
