@@ -26,17 +26,17 @@
   --font-mono: var(--font-geist-mono);
 
   --color-primary: var(--primary);
-  --color-primary-light: var(--primary-light-hex);
-  --color-primary-dark: var(--primary-dark-hex);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
 
-  --color-secondary: var(--secondary-hex);
-  --color-secondary-light: var(--secondary-light-hex);
-  --color-secondary-dark: var(--secondary-dark-hex);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
 
-  --color-primary-hover-light: var(--primary-hover-light-hex);
-  --color-primary-hover-dark: var(--primary-hover-dark-hex);
-  --color-secondary-hover-light: var(--secondary-hover-light-hex);
-  --color-secondary-hover-dark: var(--secondary-hover-dark-hex);
+  --color-primary-hover-light: var(--primary-hover-light);
+  --color-primary-hover-dark: var(--primary-hover-dark);
+  --color-secondary-hover-light: var(--secondary-hover-light);
+  --color-secondary-hover-dark: var(--secondary-hover-dark);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -50,4 +50,15 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .animate-twinkle {
+    animation: twinkle var(--duration, 3s) ease-in-out infinite;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: var(--opacity, 1); }
+  50%       { opacity: 0.1; }
 }

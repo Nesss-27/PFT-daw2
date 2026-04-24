@@ -4,7 +4,7 @@ function Navbar() {
 
   return (
 
-<div className="w-screen h-10 bg-primary "></div>
+<div className="h-10 bg-primary w-3/4  mx-auto "></div>
 
   )
 }

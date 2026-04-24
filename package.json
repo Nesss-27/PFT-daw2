@@ -1,0 +1,20 @@
+{
+  "name": "pft",
+  "version": "1.0.0",
+  "description": "Aplicación web diseñada para la validación de estrategias de inversión en bolsa mediante el uso de datos históricos (**backtesting**) y la identificación de oportunidades de mercado (**scanning**) sin riesgo de capital real.",
+  "homepage": "https://github.com/Nesss-27/PFT-daw2#readme",
+  "bugs": {
+    "url": "https://github.com/Nesss-27/PFT-daw2/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nesss-27/PFT-daw2.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
