@@ -9,8 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "relative inline-block w-full py-[5px] text-center bg-[#aaa] border border-black border-t-[#fff] border-l-[#fff] border-b-[#000] border-r-[#000] text-[16px] leading-none font-sans text-black text-left",
-        second: "relative inline-block w-full py-[5px] text-center bg-[#ddd] border border-black border-t-[#fff] border-l-[#fff] border-b-[#000] border-r-[#000] text-[16px] leading-none font-sans text-black text-left",
+        default: "relative inline-block mt-1 w-full py-[5px] text-center bg-[#aaa] border border-black border-t-[#fff] border-l-[#fff] border-b-[#000] border-r-[#000] text-[16px] leading-none font-sans text-black text-left",
+        second: "relative inline-block mt-1 w-full py-[5px] text-center bg-[#ddd] border border-black border-t-[#fff] border-l-[#fff] border-b-[#000] border-r-[#000] text-[16px] leading-none font-sans text-black text-left",
       },
     },
     defaultVariants: {

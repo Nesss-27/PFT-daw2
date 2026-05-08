@@ -1,6 +1,4 @@
-'use client'
-
-import { useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 interface Star {
   x: number
@@ -21,11 +19,17 @@ function generateStars(count: number): Star[] {
 }
 
 export default function Starfield() {
-  const stars = useRef<Star[]>(generateStars(120))
+  const [stars, setStars] = useState<Star[] | null>(null)
+
+  useEffect(() => {
+    setStars(generateStars(120))
+  }, [])
+
+  if (!stars) return <div className="fixed inset-0 bg-black -z-10" />
 
   return (
-   <div className="fixed inset-0 bg-black overflow-hidden -z-10">
-      {stars.current.map((star, i) => (
+    <div className="fixed inset-0 bg-black overflow-hidden -z-10">
+      {stars.map((star, i) => (
         <span
           key={i}
           className="absolute rounded-full bg-white animate-twinkle"

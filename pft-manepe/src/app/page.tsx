@@ -1,18 +1,22 @@
 'use client';
 
-import Footer from "@/components/ui/footer/footer";
-import Navbar from "@/components/ui/navbar/navbar";
-import Fondo from "../components/ui/fondoEstrellado/fondoEstrellado"
-import Hero from "@/components/ui/hero/hero"
+import Footer from "@/components/ui/footer";
+import Navbar from "@/components/ui/navbar";
+import Fondo from "@/components/ui/fondoEstrellado"
+import Hero from "@/components/ui/hero"
+import Terminal from "@/components/ui/terminal";
+import Carac from "@/components/ui/caracteristicas";
+import Equipo from "@/components/ui/equipo";
 
 export default function Page() {
 
     return (
         <>
-            <Fondo></Fondo>
-            <Navbar></Navbar>
-            <Hero></Hero>
-            <Footer></Footer>
+            <Fondo/>
+            <Hero/>
+            <Carac/>
+            <Equipo/>
+            <Footer/>
         </>
     )
 }

@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #444444;
+  --foreground: #ededed;
 
   --primary: #C016DD;
   --primary-light: #E391F2;
@@ -39,12 +40,8 @@
   --color-secondary-hover-dark: var(--secondary-hover-dark);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #444444;
-    --foreground: #ededed;
-  }
-}
+
+
 
 body {
   background: var(--background);
@@ -61,4 +58,8 @@ body {
 @keyframes twinkle {
   0%, 100% { opacity: var(--opacity, 1); }
   50%       { opacity: 0.1; }
+}
+
+.starFont {
+  font-family: var(--font-starjedi);
 }

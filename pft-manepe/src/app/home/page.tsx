@@ -4,6 +4,10 @@ import Menu from "@/components/ui/menu";
 import Button from "@/components/buttom";
 import Bactest from "@/components/backtest/grafico";
 
+
+//CAMBIAR TODO ABSOLUTAMENTE TODO
+
+
 export default function Page() {
     const [menuPrincipal, setMenuPrincipal] = useState<string | null>(null);
     const [subMenu, setSubMenu] = useState<string | null>(null);
@@ -30,6 +34,7 @@ export default function Page() {
 
     return (
         <>
+        <div className="w-100 text-end"><a href="/">Atras</a></div>
             <Menu titulo="Menu" xmen={1} ymen={1}>
                 <BotonPrincipal id="btn-1">Usuario</BotonPrincipal>
                 <BotonPrincipal id="btn-2">Backtest</BotonPrincipal>
