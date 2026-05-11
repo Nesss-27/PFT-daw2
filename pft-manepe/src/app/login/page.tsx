@@ -1,78 +1,117 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { registrarUsuario } from "@/lib/actions";
 import Button from "@/components/buttom";
 import Fondo from "@/components/ui/fondoEstrellado";
 
-export default function LoginPage() {
-  const router = useRouter();
+export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  // Envolvemos la Server Action para manejar el estado y evitar el error de TS
+  async function handleSubmit(formData: FormData) {
     setError(null);
+    setLoading(true);
 
-    const formData = new FormData(event.currentTarget);
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false, // Evita redirección automática para manejar errores localmente
-    });
-
-    if (res?.error) {
-      setError("Credenciales incorrectas");
-    } else {
-      router.push("/home");
-      router.refresh();
+    try {
+      const result = await registrarUsuario(formData);
+      
+      // Si la acción devuelve un error (ej: correo duplicado)
+      if (result?.error) {
+        setError(result.error);
+      }
+    } catch (err) {
+      setError("Ocurrió un error inesperado. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
     }
-  };
+  }
 
   return (
     <>
       <Fondo />
       <div className="flex flex-col justify-center items-center mt-5">
         <form 
-          onSubmit={handleSubmit}
-          className="bg-black border border-white p-6 space-y-4 flex flex-col w-80"
+          action={handleSubmit} 
+          className="bg-black border border-white p-4 space-y-3 w-[400px]"
         >
-          <h2 className="text-xl font-bold">Iniciar Sesión</h2>
+          <h2 className="text-xl font-bold text-white">Crear Cuenta</h2>
           
+          {/* Mostrar error si existe */}
           {error && (
-            <p className="bg-red-500 text-white p-2 text-sm">{error}</p>
+            <div className="bg-red-900/50 border border-red-500 text-red-200 p-2 text-xs">
+              {error}
+            </div>
           )}
 
+          <div className="flex flex-row justify-between gap-4">
+            <div className="w-full">
+              <p className="text-sm text-gray-300">Nombre</p>
+              <input
+                name="nombre"
+                type="text"
+                required
+                disabled={loading}
+                className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+
+            <div className="w-full">
+              <p className="text-sm text-gray-300">Apellidos</p>
+              <input
+                name="apellidos"
+                type="text"
+                disabled={loading}
+                className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+          </div>
+
           <div>
-            <p>Correo electrónico</p>
+            <p className="text-sm text-gray-300">Correo electrónico</p>
             <input
-              name="email"
+              name="correo"
               type="email"
               required
-              className="bg-white border border-black text-black w-full px-2"
+              disabled={loading}
+              className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
             />
           </div>
 
           <div>
-            <p>Contraseña</p>
+            <p className="text-sm text-gray-300">Contraseña</p>
             <input
               name="password"
               type="password"
               required
-              className="bg-white border border-black text-black w-full px-2"
+              disabled={loading}
+              className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
             />
           </div>
 
-          <Button seleccionado type="submit">
-            Entrar
-          </Button>
+          <div>
+            <p className="text-sm text-gray-300">Confirmar contraseña</p>
+            <input
+              name="confirmPassword"
+              type="password"
+              required
+              disabled={loading}
+              className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
 
-          <a href="/signup" className="underline text-sm text-center">
-            ¿No tienes cuenta? Regístrate
-          </a>
+          <div className="pt-2">
+            <Button seleccionado type="submit" disabled={loading}>
+              {loading ? "Registrando..." : "Crear cuenta"}
+            </Button>
+          </div>
+
+          <div className="text-center pt-2">
+            <a href="/signup" className="underline text-sm text-gray-400 hover:text-white transition-colors">
+              ¿Ya tienes cuenta? Inicia sesión
+            </a>
+          </div>
         </form>
       </div>
     </>
