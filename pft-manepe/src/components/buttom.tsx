@@ -1,8 +1,6 @@
 'use client';
 import { cva, type VariantProps } from "class-variance-authority";
-import { useState } from "react";
-
-
+import { ButtonHTMLAttributes } from "react";
 
 const buttonVariants = cva(
   "inline-block rounded transition-all duration-300", 
@@ -19,21 +17,31 @@ const buttonVariants = cva(
   }
 );
 
-// Extracción automática de tipos desde las variantes
-interface ButtonProps {
-  id: string;
+// Extendemos de ButtonHTMLAttributes para heredar 'type', 'disabled', etc.
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  id?: string; // Lo hacemos opcional si no siempre lo usas
   seleccionado: boolean;
   children?: React.ReactNode;
-  onClick?: () => void;
 }
 
-export default function Button({ id, seleccionado, children, onClick }: ButtonProps) {
+export default function Button({ 
+  id, 
+  seleccionado, 
+  children, 
+  onClick, 
+  type = "button", // Valor por defecto
+  className,
+  ...props 
+}: ButtonProps) {
   const variant = seleccionado ? "second" : "default";
 
   return (
     <button 
-      className={buttonVariants({ variant })} 
+      id={id}
+      type={type}
+      className={buttonVariants({ variant }) + ` ${className || ""}`} 
       onClick={onClick}
+      {...props} // Pasa el resto de atributos nativos al elemento <button>
     >
       {children}
     </button>

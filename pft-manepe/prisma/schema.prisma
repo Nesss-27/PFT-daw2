@@ -1,0 +1,54 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String     @id @default(cuid())
+  nombre      String?
+  correo      String     @unique
+  contrasena  String?
+  role        String     @default("user")
+  
+  // Relaciones directas: Un usuario es dueño de muchos registros
+  backtests   Backtest[]
+  scanners    Scanner[]
+  
+  createdAt   DateTime   @default(now())
+}
+
+model Backtest {
+  // ID corto para la URL de compartir (ej: "1aa")
+  id          String   @id
+  
+  // El string con todos los datos
+  datosHex    String   @db.Text
+  
+  // Relación con el dueño
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+}
+
+model Scanner {
+  // ID corto para la URL de compartir
+  id          String   @id
+  
+  // El string con la configuración
+  codigo      String   @db.Text
+  
+  // Relación con el dueño
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+}
+
+// En la zona de backtest y scaner queremos guardar en un strin todos los backtest con sus cosas, por ejemplo de hash

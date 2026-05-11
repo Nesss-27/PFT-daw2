@@ -1,69 +1,79 @@
 "use client";
+
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 import Button from "@/components/buttom";
 import Fondo from "@/components/ui/fondoEstrellado";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async () => {
-    const esValido = await verificarCredenciales();
-    //TODO Cambiar el login//
-    function verificarCredenciales() {
-      return true;
-    }
-    ////
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
 
-    if (esValido) {
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirect: false, // Evita redirección automática para manejar errores localmente
+    });
+
+    if (res?.error) {
+      setError("Credenciales incorrectas");
+    } else {
       router.push("/home");
+      router.refresh();
     }
   };
 
   return (
     <>
       <Fondo />
-      <div className="flex flex-col justify-center items-center mt-5 ">
-        <div className="bg-black border border-white p-2 space-y-1">
-          <h2 className="">Crear Cuenta</h2>
-          <div className="w-100 flex flex-row mt-3 justify-between gap-4">
-            <div className="w-full ">
-              <p>Nombre</p>
-              <input
-                type="text"
-                className="bg-white border border-black text-black w-full"
-              />
-            </div>
+      <div className="flex flex-col justify-center items-center mt-5">
+        <form 
+          onSubmit={handleSubmit}
+          className="bg-black border border-white p-6 space-y-4 flex flex-col w-80"
+        >
+          <h2 className="text-xl font-bold">Iniciar Sesión</h2>
+          
+          {error && (
+            <p className="bg-red-500 text-white p-2 text-sm">{error}</p>
+          )}
 
-            <div className="w-full">
-              <p>Apellidos</p>
-              <input
-                type="text"
-                className="bg-white border border-black text-black w-full"
-              />
-            </div>
+          <div>
+            <p>Correo electrónico</p>
+            <input
+              name="email"
+              type="email"
+              required
+              className="bg-white border border-black text-black w-full px-2"
+            />
           </div>
-          <p>Correo electronico</p>
-          <input
-            type="email"
-            className="bg-white border border-black text-black"
-          />
-          <p>Contraseña</p>
-          <input
-            type="password"
-            className="bg-white border border-black text-black"
-          />
-          <p>Confirmar contraseña</p>
-          <input
-            type="password"
-            className="bg-white border border-black text-black"
-          />
-          <Button id="" seleccionado onClick={() => handleLogin()}>
-            Crear cuenta
+
+          <div>
+            <p>Contraseña</p>
+            <input
+              name="password"
+              type="password"
+              required
+              className="bg-white border border-black text-black w-full px-2"
+            />
+          </div>
+
+          <Button seleccionado type="submit">
+            Entrar
           </Button>
-          <a href="/signup" className="underline ">
-            Ya tienes cuenta ?
+
+          <a href="/signup" className="underline text-sm text-center">
+            ¿No tienes cuenta? Regístrate
           </a>
-        </div>
+        </form>
       </div>
     </>
   );
