@@ -55,9 +55,9 @@ npm start
 * CSS - 4.9%
 * JavaScript - 1.9%
 
-## Versionado
+## WebGrafia
 
-Uso de SemVer para el versionado. 
+* [**Toda la webgrafia**]([https://github.com/Nesss-27](https://github.com/Nesss-27/PFT-daw2/blob/main/pft-manepe/Webgraphy.txt))
 
 ## Autores
 
