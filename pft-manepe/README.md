@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# pft-manepe
 
-## Getting Started
+Módulo perteneciente al repositorio PFT-daw2. Proyecto de desarrollo web construido sobre TypeScript.
 
-First, run the development server:
+## Comenzando
+
+Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
+
+### Prerrequisitos
+
+Elementos necesarios para la ejecución del software:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Node.js (LTS)
+npm
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Instalación
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Pasos para la configuración del entorno de desarrollo.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/Nesss-27/PFT-daw2.git
+```
 
-## Learn More
+2. Acceder al directorio:
+```bash
+cd PFT-daw2/pft-manepe
+```
 
-To learn more about Next.js, take a look at the following resources:
+3. Instalar dependencias:
+```bash
+npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Ejecutando las pruebas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Comandos para la ejecución del conjunto de pruebas del sistema:
+```bash
+npm test
+```
 
-## Deploy on Vercel
+## Despliegue
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Instrucciones para compilar y lanzar en producción:
+```bash
+npm run build
+npm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Construido con
+
+* TypeScript - 93.2%
+* CSS - 4.9%
+* JavaScript - 1.9%
+
+## Versionado
+
+Uso de SemVer para el versionado. 
+
+## Autores
+
+* **Nesss-27** - *Trabajo Inicial* - [Nesss-27](https://github.com/Nesss-27)
+
+## Licencia
+
+Revisar el archivo LICENSE.md en el repositorio para los detalles de la licencia aplicable.
