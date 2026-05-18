@@ -61,7 +61,8 @@ Uso de SemVer para el versionado.
 
 ## Autores
 
-* **Nesss-27** - *Trabajo Inicial* - [Nesss-27](https://github.com/Nesss-27)
+* **Nesss-27** - Frontend - [Nesss-27](https://github.com/Nesss-27)
+* **Pedro-Torres-git** - Documentacion - [Pedro-Torres-git](https://github.com/Pedro-Torres-git)
 
 ## Licencia
 
