@@ -67,3 +67,4 @@ Uso de SemVer para el versionado.
 ## Licencia
 
 Revisar el archivo LICENSE.md en el repositorio para los detalles de la licencia aplicable.
+
