@@ -1,118 +1,69 @@
 "use client";
-
-import { useState } from "react";
-import { registrarUsuario } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 import Button from "@/components/buttom";
 import Fondo from "@/components/ui/fondoEstrellado";
 
-export default function RegisterPage() {
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+export default function LoginPage() {
+  const router = useRouter();
 
-  // Envolvemos la Server Action para manejar el estado y evitar el error de TS
-  async function handleSubmit(formData: FormData) {
-    setError(null);
-    setLoading(true);
-
-    try {
-      const result = await registrarUsuario(formData);
-      
-      // Si la acción devuelve un error (ej: correo duplicado)
-      if (result?.error) {
-        setError(result.error);
-      }
-    } catch (err) {
-      setError("Ocurrió un error inesperado. Inténtalo de nuevo.");
-    } finally {
-      setLoading(false);
+  const handleLogin = async () => {
+    const esValido = await verificarCredenciales();
+    //TODO Cambiar el login//
+    function verificarCredenciales() {
+      return true;
     }
-  }
+    ////
+
+    if (esValido) {
+      router.push("/home");
+    }
+  };
 
   return (
     <>
       <Fondo />
-      <div className="flex flex-col justify-center items-center mt-5">
-        <form 
-          action={handleSubmit} 
-          className="bg-black border border-white p-4 space-y-3 w-[400px]"
-        >
-          <h2 className="text-xl font-bold text-white">Crear Cuenta</h2>
-          
-          {/* Mostrar error si existe */}
-          {error && (
-            <div className="bg-red-900/50 border border-red-500 text-red-200 p-2 text-xs">
-              {error}
-            </div>
-          )}
-
-          <div className="flex flex-row justify-between gap-4">
-            <div className="w-full">
-              <p className="text-sm text-gray-300">Nombre</p>
+      <div className="flex flex-col justify-center items-center mt-5 ">
+        <div className="bg-black border border-white p-2 space-y-1">
+          <h2 className="">Crear Cuenta</h2>
+          <div className="w-100 flex flex-row mt-3 justify-between gap-4">
+            <div className="w-full ">
+              <p>Nombre</p>
               <input
-                name="nombre"
                 type="text"
-                required
-                disabled={loading}
-                className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="bg-white border border-black text-black w-full"
               />
             </div>
 
             <div className="w-full">
-              <p className="text-sm text-gray-300">Apellidos</p>
+              <p>Apellidos</p>
               <input
-                name="apellidos"
                 type="text"
-                disabled={loading}
-                className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="bg-white border border-black text-black w-full"
               />
             </div>
           </div>
-
-          <div>
-            <p className="text-sm text-gray-300">Correo electrónico</p>
-            <input
-              name="correo"
-              type="email"
-              required
-              disabled={loading}
-              className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
-            />
-          </div>
-
-          <div>
-            <p className="text-sm text-gray-300">Contraseña</p>
-            <input
-              name="password"
-              type="password"
-              required
-              disabled={loading}
-              className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
-            />
-          </div>
-
-          <div>
-            <p className="text-sm text-gray-300">Confirmar contraseña</p>
-            <input
-              name="confirmPassword"
-              type="password"
-              required
-              disabled={loading}
-              className="bg-white border border-black text-black w-full p-1 focus:ring-2 focus:ring-blue-500 outline-none"
-            />
-          </div>
-
-          <div className="pt-2">
-            <Button seleccionado type="submit" disabled={loading}>
-              {loading ? "Registrando..." : "Crear cuenta"}
-            </Button>
-          </div>
-
-          <div className="text-center pt-2">
-            <a href="/signup" className="underline text-sm text-gray-400 hover:text-white transition-colors">
-              ¿Ya tienes cuenta? Inicia sesión
-            </a>
-          </div>
-        </form>
+          <p>Correo electronico</p>
+          <input
+            type="email"
+            className="bg-white border border-black text-black"
+          />
+          <p>Contraseña</p>
+          <input
+            type="password"
+            className="bg-white border border-black text-black"
+          />
+          <p>Confirmar contraseña</p>
+          <input
+            type="password"
+            className="bg-white border border-black text-black"
+          />
+          <Button id="" seleccionado onClick={() => handleLogin()}>
+            Crear cuenta
+          </Button>
+          <a href="/signup" className="underline ">
+            Ya tienes cuenta ?
+          </a>
+        </div>
       </div>
     </>
   );

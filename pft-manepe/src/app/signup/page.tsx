@@ -14,18 +14,14 @@ export default function signuppage() {
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    setError(""); // Limpiar errores previos
+    const esValido = await verificarCredenciales();
+    //TODO Cambiar el login//
+    function verificarCredenciales() {
+      return true;
+    }
+    ////
 
-    // Llamada a Auth.js
-    const result = await signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: false, // Evita recarga de página para manejar el error nosotros
-    });
-
-    if (result?.error) {
-      setError("Correo o contraseña incorrectos");
-    } else {
+    if (esValido) {
       router.push("/home");
     }
   };
