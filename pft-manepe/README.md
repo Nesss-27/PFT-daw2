@@ -57,7 +57,7 @@ npm start
 
 ## WebGrafia
 
-* [Toda la Webgrafia](https://github.com/Nesss-27/PFT-daw2/blob/main/pft-manepe/Webgraphy.txt)
+* [Toda la Webgrafia](https://github.com/Nesss-27/PFT-daw2/blob/main/pft-manepe/Webgraphy.md)
 
 ## Autores
 
