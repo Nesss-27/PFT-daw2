@@ -4,7 +4,7 @@ function Navbar() {
 
   return (
 
-<div className="h-10 w-full max-w-screen-xl px-10 justify-between items-center  mx-auto flex bg-black rounded-base shadow-xs border border-default">
+<div className="h-10 w-full px-10 justify-between items-center  mx-auto flex bg-black rounded-base shadow-xs border border-default">
 <img src="/logo.svg" alt="Logo" className="h-10"  />
 <a href="/">Manepe</a>
 <a href="/signup">Dashboard</a>
