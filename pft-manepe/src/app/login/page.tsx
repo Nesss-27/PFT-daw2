@@ -22,7 +22,7 @@ export default function LoginPage() {
   return (
     <>
       <Fondo />
-      <div className="flex flex-col justify-center items-center mt-5 ">
+      <div className="flex flex-col justify-center items-center h-screen">
         <div className="bg-black border border-white p-2 space-y-1">
           <h2 className="">Crear Cuenta</h2>
           <div className="w-100 flex flex-row mt-3 justify-between gap-4">

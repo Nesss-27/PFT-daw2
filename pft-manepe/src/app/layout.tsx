@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-// Elimina la importación directa de SessionProvider de next-auth
-import { Providers } from "@/components/ui/providers";
+import Navbar from "@/components/ui/navbar";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
+import Footer from "@/components/ui/footer";
 
 const starFont = localFont({
   src: "../../public/fonts/Syndra-SemiBold.otf",
@@ -36,8 +36,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${starFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* Usa el componente Providers aquí */}
-        <Providers>{children}</Providers>
+        <Navbar/>
+        {children}
+        <Footer/>
       </body>
     </html>
   );

@@ -29,7 +29,7 @@ export default function signuppage() {
   return (
     <>
       <Fondo />
-      <div className="flex flex-col justify-center items-center mt-5">
+      <div className="flex flex-col justify-center items-center h-screen">
         <div className="bg-black border border-white p-2 space-y-2 flex flex-col">
           <h2 className="text-xl">Iniciar Sesion</h2>
           
