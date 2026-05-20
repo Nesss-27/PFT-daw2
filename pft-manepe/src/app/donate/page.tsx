@@ -29,17 +29,16 @@ export default function Donate() {
   return (
     <>
       <Fondo />
-      <div className="flex items-center w-screen">
+      <div className="flex items-center h-screen">
         <div
-          className="rounded-2xl
+          className="
       w-9/10
-  border-2 border-transparent
+  border-1 border-white
  m-auto
  mt-55
  p-5
-  text-sm text-white
   flex flex-col gap-5
-  [background:linear-gradient(#222,#222)_padding-box,linear-gradient(120deg,transparent_25%,#C016DD,#3C12B1)_border-box]
+  bg-black
 "
         >
           <h1 className="starFont text-xl">Donar a Manepe</h1>
