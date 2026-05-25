@@ -20,9 +20,9 @@ const TRENDING: Ticker[] = [
 ];
 
 const MARKET_COLORS: Record<string, string> = {
-  NASDAQ: "text-blue-400",
-  NYSE: "text-purple-400",
-  BME: "text-yellow-400",
+  NASDAQ: "text-secondary-light",
+  NYSE: "text-yellow-400",
+  BME: "text-primary-light",
 };
 
 interface Props {
@@ -72,7 +72,7 @@ export default function Buscador({ onSelect }: Props) {
 
   const showDropdown = query.trim().length > 0;
 
-  return (
+ return (
     <div className="bg-black border border-white w-full flex flex-col">
       {/* Search input */}
       <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-700">
@@ -110,7 +110,7 @@ export default function Buscador({ onSelect }: Props) {
 
       {/* Dropdown results */}
       {showDropdown && (
-        <div className="max-h-64 overflow-y-auto border-b border-gray-700">
+        <div className="max-h-64 overflow-y-auto border-b border-gray-700 [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-black [&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-thumb]:rounded-[20px] [&::-webkit-scrollbar-thumb]:border-3 [&::-webkit-scrollbar-thumb]:border-solid [&::-webkit-scrollbar-thumb]:border-black">
           {filtered.length === 0 ? (
             <p className="text-gray-500 text-xs px-4 py-3 italic">
               Sin resultados para "{query}"
@@ -186,7 +186,7 @@ export default function Buscador({ onSelect }: Props) {
         {cartera.length === 0 ? (
           <p className="text-gray-600 text-xs text-center pb-3 italic">vacía</p>
         ) : (
-          <div className="flex flex-col max-h-32 overflow-y-auto">
+          <div className="flex flex-col max-h-32 overflow-y-auto [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-black [&::-webkit-scrollbar-thumb]:bg-white [&::-webkit-scrollbar-thumb]:rounded-[20px] [&::-webkit-scrollbar-thumb]:border-3 [&::-webkit-scrollbar-thumb]:border-solid [&::-webkit-scrollbar-thumb]:border-black">
             {cartera.map((ticker) => (
               <div
                 key={ticker.t}

@@ -145,7 +145,7 @@ export default function BacktestDashboard() {
           {
             label: "Estrategia",
             data: resultados.grafica.estrategia_neto,
-            borderColor: "#10B981",
+            borderColor: "#C016DD",
             backgroundColor: "rgba(16, 185, 129, 0.1)",
             tension: 0.1,
             pointRadius: 0,
