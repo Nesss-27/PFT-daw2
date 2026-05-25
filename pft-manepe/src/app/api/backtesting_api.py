@@ -77,23 +77,42 @@ def run_backtest(request: BacktestRequest):
         )
 
         curva_neta = pf.value()
+        # Forzar a que la curva neta sea una Serie unidimensional
+        if isinstance(curva_neta, pd.DataFrame):
+            curva_neta = curva_neta.iloc[:, 0]
+
         curva_benchmark = sp500_data * (request.capital_inicial / sp500_data.iloc[0])
+        if isinstance(curva_benchmark, pd.DataFrame):
+            curva_benchmark = curva_benchmark.iloc[:, 0]
 
         trades = pf.trades
-        win_rate = trades.win_rate() if len(trades.records) > 0 else 0.0
-        profit_factor = pf.trades.profit_factor() if len(trades.records) > 0 else 0.0
+        total_trades = len(trades.records)
+        
+        win_rate = trades.win_rate() if total_trades > 0 else 0.0
+        profit_factor = trades.profit_factor() if total_trades > 0 else 0.0
+
+        beneficio_absoluto = pf.total_profit()
+        retorno_porcentaje = pf.total_return() * 100
+        retorno_anualizado = pf.annualized_return() * 100
+        max_dd = pf.max_drawdown() * 100
+        sharpe = pf.sharpe_ratio()
+
+        def as_scalar(val):
+            if isinstance(val, (pd.Series, pd.DataFrame)):
+                return val.iloc[0] if not val.empty else 0.0
+            return val
 
         return {
             "estado": "exito",
             "resultados_netos": {
-                "beneficio_neto_absoluto": round(float(pf.total_profit()), 2),
-                "retorno_neto_porcentaje": round(float(pf.total_return() * 100), 2),
-                "retorno_neto_anualizado": round(float(pf.annualized_return() * 100), 2),
-                "maximo_drawdown": round(float(pf.max_drawdown() * 100), 2),
-                "ratio_sharpe": round(float(pf.sharpe_ratio()), 2),
-                "factor_beneficio": round(float(profit_factor), 2),
-                "tasa_acierto_neta": round(float(win_rate * 100), 2),
-                "numero_operaciones": int(len(trades.records))
+                "beneficio_neto_absoluto": round(float(as_scalar(beneficio_absoluto)), 2),
+                "retorno_neto_porcentaje": round(float(as_scalar(retorno_porcentaje)), 2),
+                "retorno_neto_anualizado": round(float(as_scalar(retorno_anualizado)), 2),
+                "maximo_drawdown": round(float(as_scalar(max_dd)), 2),
+                "ratio_sharpe": round(float(as_scalar(sharpe)), 2),
+                "factor_beneficio": round(float(as_scalar(profit_factor)), 2),
+                "tasa_acierto_neta": round(float(as_scalar(win_rate) * 100 if total_trades > 0 else 0.0), 2),
+                "numero_operaciones": int(total_trades)
             },
             "grafica": {
                 "fechas": curva_neta.index.strftime('%Y-%m-%d').tolist(),

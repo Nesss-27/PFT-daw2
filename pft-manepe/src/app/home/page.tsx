@@ -1,53 +1,61 @@
 "use client";
+
 import Fondo from "@/components/ui/fondoEstrellado";
+import Buscador from "@/components/ui/buscador";
 
 export default function Page() {
   return (
-    
     <>
       <Fondo />
-      <div className=" w-full h-[96vh] grid grid-cols-3 gap-3 p-2">
-        <div className="col-span-2 p-3 bg-pink-300/40 border border-4 border-pink-300 rounded-xl">
-          <h1 className="starFont text-xl">Backtest</h1>
-          <h2>
-            Es el vecino el que elige al alcalde y es el alcalde el que quiere
-            que sean los vecinos el alcalde. Los españoles son muy españoles y
-            mucho españoles.
-          </h2>
-          <a href="/backtest">BOTON</a>
+      <div className="flex h-[96vh] py-5 px-4 gap-4">
+
+
+        <div className="flex flex-col gap-4 w-1/2">
+
+
+          <div className="bg-black border border-white p-6 flex-1 flex flex-col space-y-3">
+            <h1 className="starFont text-xl font-semibold">Backtest</h1>
+            <p className="text-sm text-gray-300">
+              Diseña tu estrategia cuantitativa, define reglas de entrada y
+              salida, y simula su comportamiento histórico sobre cualquier activo.
+            </p>
+            <a
+              href="/backtest"
+              className="inline-block text-sm border border-white px-4 py-1 mt-auto hover:bg-white hover:text-black transition-colors w-fit"
+            >
+              Ir al Backtest →
+            </a>
+          </div>
+
+
+          <div className="bg-black border border-white p-6 flex-1 flex flex-col space-y-3">
+            <h1 className="starFont text-xl font-semibold">Screener</h1>
+            <p className="text-sm text-gray-300">
+              Filtra el universo de activos según criterios técnicos y
+              fundamentales para encontrar las mejores oportunidades de mercado.
+            </p>
+            <a
+              href="/screener"
+              className="inline-block text-sm border border-white px-4 py-1 mt-auto hover:bg-white hover:text-black transition-colors w-fit"
+            >
+              Ir al Screener →
+            </a>
+          </div>
+
         </div>
-        <div className="col-span-1 row-span-2 bg-pink-500/40 border border-4 border-pink-500 rounded-xl p-3 overflow-y-auto 
-            scrollbar-thin
-            [scrollbar-width:thin] 
-            [scrollbar-color:#ff007f_#20232a]
-            [scroll-padding:10em]
-            ">
-          <h1 className="starFont text-xl" >Tutorial</h1>
-          <h2>
-            A veces la mejor decisión es no tomar ninguna decisión, y eso es
-            también una decisión. La cerámica de Talavera no es cosa menor,
-            dicho de otra manera, es cosa mayor. Viva el vino. España es una
-            gran nación y los españoles muy españoles y mucho españoles.
-            Exportar es positivo porque vendes lo que produces a uno que está
-            fuera de tu país."Dije que bajaría los impuestos y los estoy
-            subiendo. No he cambiado de criterio, es que han cambiado las
-            circunstancias." La lluvia es un fenómeno que se produce cuando las
-            nubes se cargan de agua y ésta cae. Es el alcalde el que quiere que
-            sean los vecinos el alcalde. Un vaso es un vaso y un plato es un
-            plato. Por las carreteras van coches y por los aeropuertos aviones.
-            España es un gran país que tiene españoles.
-          </h2>
-          <a href="#">BOTON</a>
+
+
+        <div className="w-1/2 flex flex-col">
+          <div className="bg-black border border-white p-6 flex-1 flex flex-col">
+            <h1 className="starFont text-xl font-semibold mb-4">
+              Buscador de Tickers
+            </h1>
+            <div className="flex-1 overflow-hidden">
+              <Buscador />
+            </div>
+          </div>
         </div>
-        <div className="col-span-2 bg-pink-700/40  border border-4 border-pink-700 rounded-xl p-3">
-          <h1 className="starFont text-xl" >Backtest</h1>
-          <h2>
-            Es el vecino el que elige al alcalde y es el alcalde el que quiere
-            que sean los vecinos el alcalde. Los españoles son muy españoles y
-            mucho españoles.
-          </h2>
-          <a href="/screener">BOTON</a>
-        </div>
+
       </div>
     </>
   );

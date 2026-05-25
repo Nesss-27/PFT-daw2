@@ -1,11 +1,9 @@
-'use client';
+import ScreenerDashboard from "@/components/screener/screenerDashboard";
 
-export default function Page() {
-
-    return (
-        <>
-
-
-        </>
-    )
+export default function screener() {
+  return (
+    <main>
+      <ScreenerDashboard />
+    </main>
+  );
 }
