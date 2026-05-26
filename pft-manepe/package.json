@@ -9,8 +9,8 @@
     "lint": "next lint",
     "dev:win": "concurrently \"cross-env PYTHONPATH=. py -m uvicorn src.app.api.backtesting_api:app --host 127.0.0.1 --port 8001\" \"cross-env PYTHONPATH=. py -m uvicorn src.app.api.screener_api:app --host 127.0.0.1 --port 8002\" \"next dev\"",
 "dev:lin": "concurrently \"cross-env PYTHONPATH=. python3 -m uvicorn src.app.api.backtesting_api:app --host 0.0.0.0 --port 8001\" \"cross-env PYTHONPATH=. python3 -m uvicorn src.app.api.screener_api:app --host 0.0.0.0 --port 8002\" \"next dev --hostname 0.0.0.0 --port 3000\""  },
-  "build:win": "concurrently \"cross-env PYTHONPATH=. py -m uvicorn src.app.api.backtesting_api:app --host 127.0.0.1 --port 8001\" \"cross-env PYTHONPATH=. py -m uvicorn src.app.api.screener_api:app --host 127.0.0.1 --port 8002\" \"next build\"",
-"build:lin": "concurrently \"cross-env PYTHONPATH=. python3 -m uvicorn src.app.api.backtesting_api:app --host 0.0.0.0 --port 8001\" \"cross-env PYTHONPATH=. python3 -m uvicorn src.app.api.screener_api:app --host 0.0.0.0 --port 8002\" \"next build --hostname 0.0.0.0 --port 3000\""  },
+  "start:win": "concurrently \"cross-env PYTHONPATH=. py -m uvicorn src.app.api.backtesting_api:app --host 127.0.0.1 --port 8001\" \"cross-env PYTHONPATH=. py -m uvicorn src.app.api.screener_api:app --host 127.0.0.1 --port 8002\" \"next start\"",
+"start:lin": "concurrently \"cross-env PYTHONPATH=. python3 -m uvicorn src.app.api.backtesting_api:app --host 0.0.0.0 --port 8001\" \"cross-env PYTHONPATH=. python3 -m uvicorn src.app.api.screener_api:app --host 0.0.0.0 --port 8002\" \"next start""  },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.2",
     "@prisma/client": "^6.19.3",
