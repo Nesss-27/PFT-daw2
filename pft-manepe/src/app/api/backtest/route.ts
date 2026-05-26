@@ -4,7 +4,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Conexión con tu servidor FastAPI
     const response = await fetch('http://127.0.0.1:8001/run-backtest', {
       method: 'POST',
       headers: {
