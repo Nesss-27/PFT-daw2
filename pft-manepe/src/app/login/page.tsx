@@ -1,21 +1,28 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import Button from "@/components/buttom";
 import Fondo from "@/components/ui/fondoEstrellado";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    const esValido = await verificarCredenciales();
-    //TODO Cambiar el login//
-    function verificarCredenciales() {
-      return true;
-    }
-    ////
+    setError("");
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
 
-    if (esValido) {
+    if (res?.ok) {
       router.push("/home");
+    } else {
+      setError("Correo o contraseña incorrectos");
     }
   };
 
@@ -23,45 +30,33 @@ export default function LoginPage() {
     <>
       <Fondo />
       <div className="flex flex-col justify-center items-center h-screen">
-        <div className="bg-black border border-white p-2 space-y-1">
-          <h2 className="">Crear Cuenta</h2>
-          <div className="w-100 flex flex-row mt-3 justify-between gap-4">
-            <div className="w-full ">
-              <p>Nombre</p>
-              <input
-                type="text"
-                className="bg-white border border-black text-black w-full"
-              />
-            </div>
+        <div className="bg-black border border-white p-2 space-y-2 flex flex-col">
+          <h2 className="text-xl">Iniciar Sesión</h2>
 
-            <div className="w-full">
-              <p>Apellidos</p>
-              <input
-                type="text"
-                className="bg-white border border-black text-black w-full"
-              />
-            </div>
-          </div>
-          <p>Correo electronico</p>
+          {error && <p className="text-red-500 text-xs">{error}</p>}
+
+          <p>Correo electrónico</p>
           <input
             type="email"
-            className="bg-white border border-black text-black"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="bg-white border border-black text-black p-1"
           />
+
           <p>Contraseña</p>
           <input
             type="password"
-            className="bg-white border border-black text-black"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="bg-white border border-black text-black p-1"
           />
-          <p>Confirmar contraseña</p>
-          <input
-            type="password"
-            className="bg-white border border-black text-black"
-          />
-          <Button id="" seleccionado onClick={() => handleLogin()}>
-            Crear cuenta
+
+          <Button seleccionado onClick={handleLogin}>
+            Iniciar sesión
           </Button>
-          <a href="/signup" className="underline ">
-            Ya tienes cuenta ?
+
+          <a href="/signup" className="underline text-sm">
+            ¿No tienes cuenta? Crea una
           </a>
         </div>
       </div>
