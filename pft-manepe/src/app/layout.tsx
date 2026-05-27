@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/ui/navbar";
+import Providers from "@/components/providers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
@@ -36,9 +37,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${starFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar/>
-        {children}
-        <Footer/>
+        <Providers>
+          <Navbar/>
+          {children}
+          <Footer/>
+        </Providers>
       </body>
     </html>
   );
