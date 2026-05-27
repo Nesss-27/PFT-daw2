@@ -27,7 +27,7 @@ function Navbar() {
           
           {session ? (
             <button
-              onClick={() => signOut({ callbackUrl: `${window.location.origin}/login` })}
+              onClick={() => signOut({ callbackUrl: `/login` })}
               className="px-6 py-3 hover:bg-white hover:text-black transition-colors text-sm text-left border-t border-white"
             >
               Salir
