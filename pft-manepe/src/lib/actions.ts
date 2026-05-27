@@ -9,12 +9,12 @@ export async function registrarUsuario(formData: FormData) {
   const password = formData.get("password") as string
 
   // Validar que no exista el usuario
-  const existe = await prisma.user.findUnique({ where: { correo } })
+  const existe = await prisma.usuarios.findUnique({ where: { correo } })
   if (existe) return { error: "El correo ya existe" }
 
   const hashed = await bcrypt.hash(password, 10)
 
-  await prisma.user.create({
+  await prisma.usuarios.create({
     data: {
       nombre,
       correo,
