@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@/components/buttom";
 import Fondo from "@/components/ui/fondoEstrellado";
 
@@ -42,6 +42,25 @@ const inputClass =
   "bg-white border border-black text-black px-2 py-1 text-sm w-full focus:outline-none";
 const labelClass = "text-sm text-gray-300 mb-1 block";
 
+// Serialización / deserialización del payload en la URL
+function payloadToUrl(payload: any): string {
+  const json = JSON.stringify(payload);
+  const b64  = btoa(unescape(encodeURIComponent(json)));
+  const url  = new URL(window.location.href);
+  url.searchParams.set("config", b64);
+  return url.toString();
+}
+
+function urlToPayload(search: string) {
+  const raw = new URLSearchParams(search).get("config");
+  if (!raw) return null;
+  try {
+    return JSON.parse(decodeURIComponent(escape(atob(raw))));
+  } catch {
+    return null;
+  }
+}
+
 export default function ScreenerDashboard() {
   const [tickersInput, setTickersInput] = useState<string>("AAPL, MSFT, GOOGL, AMZN");
   const [startDate, setStartDate] = useState<string>("2025-01-01");
@@ -51,6 +70,33 @@ export default function ScreenerDashboard() {
   const [resultado, setResultado] = useState<ScreenerResponse | null>(null);
   const [cargando, setCargando] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // Leer config desde la URL al montar el componente
+  useEffect(() => {
+    const saved = urlToPayload(window.location.search);
+    if (!saved) return;
+    if (saved.tickers)    setTickersInput(saved.tickers.join(", "));
+    if (saved.start_date) setStartDate(saved.start_date);
+    if (saved.condiciones) setCondiciones(saved.condiciones);
+  }, []);
+
+  const copiarLink = () => {
+    const listaTickers = tickersInput
+      .split(",")
+      .map((t) => t.trim().toUpperCase())
+      .filter(Boolean);
+    const payload = {
+      tickers: listaTickers,
+      start_date: startDate,
+      condiciones,
+    };
+    const url = payloadToUrl(payload);
+    window.history.pushState(null, "", url);
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const agregarRegla = () => {
     setCondiciones([
@@ -84,6 +130,14 @@ export default function ScreenerDashboard() {
       setCargando(false);
       return;
     }
+
+    // Actualiza la URL automáticamente al ejecutar
+    const url = payloadToUrl({
+      tickers: listaTickers,
+      start_date: startDate,
+      condiciones,
+    });
+    window.history.pushState(null, "", url);
 
     try {
       const response = await fetch("/api/screener", {
@@ -208,9 +262,19 @@ export default function ScreenerDashboard() {
             </button>
           </div>
 
-          <Button id="" seleccionado onClick={ejecutarScreener}>
-            {cargando ? "Ejecutando Análisis..." : "Escanear Mercado"}
-          </Button>
+          <div className="flex gap-3 items-center flex-wrap">
+            <Button id="" seleccionado onClick={ejecutarScreener}>
+              {cargando ? "Ejecutando Análisis..." : "Escanear Mercado"}
+            </Button>
+
+            <button
+              type="button"
+              onClick={copiarLink}
+              className="text-sm text-gray-300 border border-gray-600 px-3 py-1 hover:border-white transition-colors"
+            >
+              {copied ? "✓ Link copiado" : "Guardar link"}
+            </button>
+          </div>
 
           {error && (
             <p className="text-red-400 text-sm font-semibold">Error: {error}</p>

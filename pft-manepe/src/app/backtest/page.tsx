@@ -1,6 +1,6 @@
 "use client";
-//importaciones 
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -14,8 +14,6 @@ import {
 } from "chart.js";
 import Button from "@/components/buttom";
 import Fondo from "@/components/ui/fondoEstrellado";
-
-//suerte para entender esto ...
 
 ChartJS.register(
   CategoryScale,
@@ -46,14 +44,12 @@ const indicadoresDisponibles = [
   "MACD_SIGNAL",
 ];
 
-// los defino aqui porque se supone que es mas eficiente 
 const selectClass =
   "bg-black border border-white text-white px-2 py-1 text-sm focus:outline-none";
 const inputClass =
   "bg-white border border-black text-black px-2 py-1 text-sm w-full focus:outline-none";
 const labelClass = "text-sm text-gray-300 mb-1 block";
 
-// Se asegura de que lo que le llega a fila es realmente lo que es, como las validaciones del correo 
 interface FilaReglaProps {
   regla: Regla;
   idx: number;
@@ -63,8 +59,7 @@ interface FilaReglaProps {
   manejarCambioRegla: (tipo: "compra" | "venta", index: number, campo: keyof Regla, valor: any) => void;
   eliminarRegla: (tipo: "compra" | "venta", index: number) => void;
 }
-// creo este objeto fuera porque me estaba generando un objeto nuevo cada vez que se actualizaba 
-// explicacion de claude de porque pasa : Cada vez que el estado del padre cambia (por ejemplo, el usuario escribe una letra en un input), React vuelve a ejecutar la función BacktestDashboard entera de arriba a abajo. Si FilaRegla estuviera definida dentro de esa función, en cada render React la vería como una función completamente nueva y diferente, aunque haga exactamente lo mismo.
+
 const FilaRegla = ({
   regla,
   idx,
@@ -74,7 +69,6 @@ const FilaRegla = ({
   manejarCambioRegla,
   eliminarRegla,
 }: FilaReglaProps) => (
-  //From para recojer los datos para poder enviarselo al backend
   <div className="flex flex-row gap-2 items-center mb-2 flex-wrap">
     <select
       value={regla.indicador1}
@@ -143,9 +137,28 @@ const FilaRegla = ({
   </div>
 );
 
-// 
+// Serialización / deserialización del payload en la URL
+function payloadToUrl(payload: any): string {
+  const json = JSON.stringify(payload);
+  const b64  = btoa(unescape(encodeURIComponent(json)));
+  const url  = new URL(window.location.href);
+  url.searchParams.set("config", b64);
+  return url.toString();
+}
+
+function urlToPayload(search: string) {
+  const raw = new URLSearchParams(search).get("config");
+  if (!raw) return null;
+  try {
+    return JSON.parse(decodeURIComponent(escape(atob(raw))));
+  } catch {
+    return null;
+  }
+}
+
 export default function BacktestDashboard() {
   const [loading, setLoading] = useState(false);
+  const [copied,  setCopied]  = useState(false);
   const [resultados, setResultados] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -159,6 +172,17 @@ export default function BacktestDashboard() {
   const [condicionesVenta, setCondicionesVenta] = useState<Regla[]>([
     { indicador1: "SMA", param1: 21, operador: "<", indicador2: "SMA", param2: 50 },
   ]);
+
+  // Leer config desde la URL al montar el componente
+  useEffect(() => {
+    const saved = urlToPayload(window.location.search);
+    if (!saved) return;
+    if (saved.tickers)            setTickers(saved.tickers.join(", "));
+    if (saved.start_date)         setStartDate(saved.start_date);
+    if (saved.capital_inicial)    setCapitalInicial(saved.capital_inicial);
+    if (saved.condiciones_compra) setCondicionesCompra(saved.condiciones_compra);
+    if (saved.condiciones_venta)  setCondicionesVenta(saved.condiciones_venta);
+  }, []);
 
   const manejarCambioRegla = (
     tipo: "compra" | "venta",
@@ -189,6 +213,23 @@ export default function BacktestDashboard() {
     tipo === "compra"
       ? setCondicionesCompra(condicionesCompra.filter((_, i) => i !== index))
       : setCondicionesVenta(condicionesVenta.filter((_, i) => i !== index));
+  };
+
+  const copiarLink = () => {
+    const listaTickers = tickers
+      .split(",")
+      .map((t) => t.trim().toUpperCase())
+      .filter(Boolean);
+    const payload = {
+      tickers: listaTickers,
+      start_date: startDate,
+      capital_inicial: Number(capitalInicial),
+      condiciones_compra: condicionesCompra,
+      condiciones_venta: condicionesVenta,
+    };
+    navigator.clipboard.writeText(payloadToUrl(payload));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const ejecutarBacktest = async (e: React.FormEvent) => {
@@ -223,6 +264,7 @@ export default function BacktestDashboard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+      console.log(payload);
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setResultados(data);
@@ -350,9 +392,19 @@ export default function BacktestDashboard() {
             </button>
           </div>
 
-          <Button type="submit" seleccionado>
-            {loading ? "Calculando simulación cuantitativa..." : "Run Backtest"}
-          </Button>
+          <div className="flex gap-3 items-center flex-wrap">
+            <Button type="submit" seleccionado>
+              {loading ? "Calculando simulación cuantitativa..." : "Run Backtest"}
+            </Button>
+
+            <button
+              type="button"
+              onClick={copiarLink}
+              className="text-sm text-gray-300 border border-gray-600 px-3 py-1 hover:border-white transition-colors"
+            >
+              {copied ? "✓ Link copiado" : "Guardar link"}
+            </button>
+          </div>
 
           {error && (
             <p className="text-red-400 text-sm font-semibold">

@@ -8,9 +8,9 @@ function Navbar() {
 
   return (
     <div className="h-10 w-full px-10 flex justify-between items-center bg-black border border-white relative">
-      
+      <a href="/">
       <img src="/logo.svg" alt="Logo" className="h-8" />
-
+</a>
       {/* Botón hamburguesa */}
       <button onClick={() => setOpen(!open)} className="flex flex-col gap-1 cursor-pointer">
         <span className={`block w-5 h-0.5 bg-white transition-all ${open ? "rotate-45 translate-y-1.5" : ""}`} />
