@@ -24,7 +24,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Manepe",
   description: "Backtest & Screener",
+  icons: ""
 };
+
 
 export default function RootLayout({
   children,
