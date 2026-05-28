@@ -25,7 +25,6 @@ ChartJS.register(
   Legend
 );
 
-// Interfaces y Constantes
 interface Regla {
   indicador1: string;
   param1: number;
@@ -72,31 +71,23 @@ const FilaRegla = ({
   <div className="flex flex-row gap-2 items-center mb-2 flex-wrap">
     <select
       value={regla.indicador1}
-      onChange={(e) =>
-        manejarCambioRegla(tipo, idx, "indicador1", e.target.value)
-      }
+      onChange={(e) => manejarCambioRegla(tipo, idx, "indicador1", e.target.value)}
       className={selectClass}
     >
       {indicadoresDisponibles.map((i) => (
-        <option key={i} value={i}>
-          {i}
-        </option>
+        <option key={i} value={i}>{i}</option>
       ))}
     </select>
     <input
       type="number"
       placeholder="Param 1"
       value={regla.param1}
-      onChange={(e) =>
-        manejarCambioRegla(tipo, idx, "param1", Number(e.target.value))
-      }
+      onChange={(e) => manejarCambioRegla(tipo, idx, "param1", Number(e.target.value))}
       className="bg-white border border-black text-black px-2 py-1 text-sm w-20 focus:outline-none"
     />
     <select
       value={regla.operador}
-      onChange={(e) =>
-        manejarCambioRegla(tipo, idx, "operador", e.target.value)
-      }
+      onChange={(e) => manejarCambioRegla(tipo, idx, "operador", e.target.value)}
       className={selectClass}
     >
       <option value=">">&gt;</option>
@@ -104,15 +95,11 @@ const FilaRegla = ({
     </select>
     <select
       value={regla.indicador2}
-      onChange={(e) =>
-        manejarCambioRegla(tipo, idx, "indicador2", e.target.value)
-      }
+      onChange={(e) => manejarCambioRegla(tipo, idx, "indicador2", e.target.value)}
       className={selectClass}
     >
       {indicadoresDisponibles.map((i) => (
-        <option key={i} value={i}>
-          {i}
-        </option>
+        <option key={i} value={i}>{i}</option>
       ))}
     </select>
     <input
@@ -120,9 +107,7 @@ const FilaRegla = ({
       step="any"
       placeholder="Param 2"
       value={regla.param2}
-      onChange={(e) =>
-        manejarCambioRegla(tipo, idx, "param2", Number(e.target.value))
-      }
+      onChange={(e) => manejarCambioRegla(tipo, idx, "param2", Number(e.target.value))}
       className="bg-white border border-black text-black px-2 py-1 text-sm w-20 focus:outline-none"
     />
     {(tipo === "compra" ? condicionesCompra : condicionesVenta).length > 1 && (
@@ -137,7 +122,6 @@ const FilaRegla = ({
   </div>
 );
 
-// Serialización / deserialización del payload en la URL
 function payloadToUrl(payload: any): string {
   const json = JSON.stringify(payload);
   const b64  = btoa(unescape(encodeURIComponent(json)));
@@ -173,7 +157,6 @@ export default function BacktestDashboard() {
     { indicador1: "SMA", param1: 21, operador: "<", indicador2: "SMA", param2: 50 },
   ]);
 
-  // Leer config desde la URL al montar el componente
   useEffect(() => {
     const saved = urlToPayload(window.location.search);
     if (!saved) return;
@@ -190,8 +173,7 @@ export default function BacktestDashboard() {
     campo: keyof Regla,
     valor: any
   ) => {
-    const lista =
-      tipo === "compra" ? [...condicionesCompra] : [...condicionesVenta];
+    const lista = tipo === "compra" ? [...condicionesCompra] : [...condicionesVenta];
     lista[index] = { ...lista[index], [campo]: valor };
     tipo === "compra" ? setCondicionesCompra(lista) : setCondicionesVenta(lista);
   };
@@ -215,19 +197,39 @@ export default function BacktestDashboard() {
       : setCondicionesVenta(condicionesVenta.filter((_, i) => i !== index));
   };
 
+  // Construye el payload para serializar (sin los .map de Number, eso es solo para el fetch)
+  const buildSharePayload = (listaTickers: string[]) => ({
+    tickers: listaTickers,
+    start_date: startDate,
+    capital_inicial: Number(capitalInicial),
+    condiciones_compra: condicionesCompra,
+    condiciones_venta: condicionesVenta,
+  });
+
   const copiarLink = () => {
     const listaTickers = tickers
       .split(",")
       .map((t) => t.trim().toUpperCase())
       .filter(Boolean);
-    const payload = {
-      tickers: listaTickers,
-      start_date: startDate,
-      capital_inicial: Number(capitalInicial),
-      condiciones_compra: condicionesCompra,
-      condiciones_venta: condicionesVenta,
-    };
-    navigator.clipboard.writeText(payloadToUrl(payload));
+    const url = payloadToUrl(buildSharePayload(listaTickers));
+    window.history.pushState(null, "", url);
+
+    // navigator.clipboard solo funciona en HTTPS o localhost
+    // fallback con execCommand para HTTP
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(url);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      ta.style.position = "fixed";
+      ta.style.opacity  = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -241,6 +243,10 @@ export default function BacktestDashboard() {
       .split(",")
       .map((t) => t.trim().toUpperCase())
       .filter((t) => t !== "");
+
+    // Actualiza la URL automáticamente al ejecutar
+    const url = payloadToUrl(buildSharePayload(listaTickers));
+    window.history.pushState(null, "", url);
 
     const payload = {
       tickers: listaTickers,
@@ -306,7 +312,6 @@ export default function BacktestDashboard() {
         <form onSubmit={ejecutarBacktest} className="bg-black border border-white p-6 w-full max-w-4xl space-y-4">
           <h2 className="text-xl font-semibold">Screener Quant Avanzado</h2>
 
-          {/* Configuración base */}
           <div className="flex flex-row gap-4 flex-wrap">
             <div className="flex-1 min-w-[160px]">
               <p className={labelClass}>Tickers (separados por coma)</p>
@@ -340,11 +345,8 @@ export default function BacktestDashboard() {
             </div>
           </div>
 
-          {/* Condiciones Compra */}
           <div>
-            <p className="text-green-400 font-semibold mb-2">
-              Condiciones de Compra (AND)
-            </p>
+            <p className="text-green-400 font-semibold mb-2">Condiciones de Compra (AND)</p>
             {condicionesCompra.map((regla, idx) => (
               <FilaRegla
                 key={`compra-${idx}`}
@@ -366,11 +368,8 @@ export default function BacktestDashboard() {
             </button>
           </div>
 
-          {/* Condiciones Venta */}
           <div>
-            <p className="text-red-400 font-semibold mb-2">
-              Condiciones de Venta (AND)
-            </p>
+            <p className="text-red-400 font-semibold mb-2">Condiciones de Venta (AND)</p>
             {condicionesVenta.map((regla, idx) => (
               <FilaRegla
                 key={`venta-${idx}`}
@@ -407,13 +406,10 @@ export default function BacktestDashboard() {
           </div>
 
           {error && (
-            <p className="text-red-400 text-sm font-semibold">
-              Error: {error}
-            </p>
+            <p className="text-red-400 text-sm font-semibold">Error: {error}</p>
           )}
         </form>
 
-        {/* Resultados */}
         {resultados && chartData && (
           <div className="w-full max-w-4xl mt-6 space-y-4">
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -439,10 +435,7 @@ export default function BacktestDashboard() {
                   color: "text-white",
                 },
               ].map(({ label, value, color }) => (
-                <div
-                  key={label}
-                  className="bg-black border border-white p-4 space-y-1"
-                >
+                <div key={label} className="bg-black border border-white p-4 space-y-1">
                   <p className="text-xs text-gray-400">{label}</p>
                   <p className={`text-2xl font-bold ${color}`}>{value}</p>
                 </div>

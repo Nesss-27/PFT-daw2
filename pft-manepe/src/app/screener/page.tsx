@@ -93,7 +93,23 @@ export default function ScreenerDashboard() {
     };
     const url = payloadToUrl(payload);
     window.history.pushState(null, "", url);
-    navigator.clipboard.writeText(url);
+
+    // navigator.clipboard solo funciona en HTTPS o localhost
+    // fallback con execCommand para HTTP
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(url);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      ta.style.position = "fixed";
+      ta.style.opacity  = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
