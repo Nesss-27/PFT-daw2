@@ -8,27 +8,27 @@ function Equipo() {
       </h2>
       <div className="flex justify-center items-center mb-10">
         <img
-          src="/images/p-prueba.avif"
-          alt=""
-          className="h-30 w-30 object-contain border rounded-full m-4 "
+          src="/images/Nesss-27.png"
+          alt="Nesss-27"
+          className="h-30 w-30 object-cover border rounded-full m-4 "
         />
-        <p className="max-w-[60%]">Nombre apellidos puesto y mas cosas</p>
+        <p className="max-w-[60%]"><a href="https://github.com/Nesss-27">@Nesss-27</a></p>
       </div>
       <div className="flex justify-center items-center mb-10">
         <img
-          src="/images/p-prueba.avif"
+          src="/images/pedro.png"
           alt=""
-          className="h-30 w-30 object-contain border rounded-full m-4 "
+          className="h-30 w-30 object-cover border rounded-full m-4 "
         />
-        <p className="max-w-[60%]">Nombre apellidos puesto y mas cosas</p>
+        <p className="max-w-[60%]"><a href="https://github.com/Pedro-Torres-git">@Pedro-Torres-git</a></p>
       </div>
       <div className="flex justify-center items-center mb-10">
         <img
-          src="/images/p-prueba.avif"
+          src="/images/marcos.png "
           alt=""
-          className="h-30 w-30 object-contain border rounded-full m-4 "
+          className="h-30 w-30 object-cover border rounded-full m-4 "
         />
-        <p className="max-w-[60%]">Nombre apellidos puesto y mas cosas</p>
+        <p className="max-w-[60%]"><a href="https://github.com/marcosbasado">@marcosbasado</a></p>
       </div>
     </div>
   );

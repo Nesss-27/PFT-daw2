@@ -392,8 +392,8 @@ export default function BacktestDashboard() {
           </div>
 
           <div className="flex gap-3 items-center flex-wrap">
-            <Button type="submit" seleccionado>
-              {loading ? "Calculando simulación cuantitativa..." : "Run Backtest"}
+            <Button className="bg-black border border-r-white border-b-white border-white p-4 m-1 text-white" seleccionado>
+              {loading ? "Calculando simulación cuantitativa..." : "Ejecutar Backtest"}
             </Button>
 
             <button

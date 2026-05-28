@@ -7,7 +7,7 @@ function Navbar() {
   const { data: session } = useSession();
 
   return (
-    <div className="h-10 w-full px-10 flex justify-between items-center bg-black border border-white relative">
+    <div className="h-10 w-full px-10  flex justify-between items-center bg-black border-0 border-b-1 border-white sticky">
       <a href="/">
       <img src="/logo.svg" alt="Logo" className="h-8" />
 </a>
