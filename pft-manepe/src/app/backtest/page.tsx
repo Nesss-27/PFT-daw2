@@ -391,19 +391,25 @@ export default function BacktestDashboard() {
             </button>
           </div>
 
-          <div className="flex gap-3 items-center flex-wrap">
-            <Button className="bg-black border border-r-white border-b-white border-white p-4 m-1 text-white" seleccionado>
-              {loading ? "Calculando simulación cuantitativa..." : "Ejecutar Backtest"}
-            </Button>
+<div className="flex gap-3 items-center flex-wrap">
+  {/* 1. Le añadimos type="submit" para que ejecute el onSubmit del form */}
+  <Button 
+    type="submit" 
+    className="bg-black border border-r-white border-b-white border-white p-4 m-1 text-white" 
+    seleccionado
+  >
+    {loading ? "Calculando simulación cuantitativa..." : "Ejecutar Backtest"}
+  </Button>
 
-            <button
-              type="submit"
-              onClick={copiarLink}
-              className="text-sm text-gray-300 border border-gray-600 px-3 py-1 hover:border-white transition-colors"
-            >
-              {copied ? "✓ Link copiado" : "Guardar link"}
-            </button>
-          </div>
+  {/* 2. Le cambiamos el type a "button" para que SOLO ejecute el onClick de copiar */}
+  <button
+    type="button" 
+    onClick={copiarLink}
+    className="text-sm text-gray-300 border border-gray-600 px-3 py-1 hover:border-white transition-colors"
+  >
+    {copied ? "✓ Link copiado" : "Guardar link"}
+  </button>
+</div>
 
           {error && (
             <p className="text-red-400 text-sm font-semibold">Error: {error}</p>
