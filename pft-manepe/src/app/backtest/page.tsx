@@ -398,6 +398,7 @@ export default function BacktestDashboard() {
 
             <button
               type="button"
+              type="submit"
               onClick={copiarLink}
               className="text-sm text-gray-300 border border-gray-600 px-3 py-1 hover:border-white transition-colors"
             >
