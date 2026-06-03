@@ -278,7 +278,7 @@ export default function ScreenerDashboard() {
             </button>
           </div>
 
-          <div className="flex gap-3 items-center flex-wrap">
+          <div className="text-sm text-gray-300 border border-gray-600 px-3 py-1 hover:border-white transition-colors">
             <Button id="" seleccionado onClick={ejecutarScreener}>
               {cargando ? "Ejecutando Análisis..." : "Escanear Mercado"}
             </Button>
